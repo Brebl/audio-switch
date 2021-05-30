@@ -10,37 +10,29 @@ void init_interrupts()
 ISR(PCINT2_vect) {
     static uint8_t led_counter = 0;
     const uint8_t led_max_count = 2;
-    uint8_t sb = PD5;           //selector button
-    static bool sbp = false;    //selector button pressed
     uint8_t buttonpins;
-    while(1) {
-        buttonpins = debounce(PIND);
-        if(bit_is_clear(buttonpins, sb)){
-            if(!sbp) {
-                sbp = true;
-                led_counter++;
-                if(led_counter > led_max_count) {
-                    led_counter = 0;
-                }
-                switch (led_counter) {
-                case 0:
-                    PORTB = led1;
-                    break;
-                case 1:
-                    PORTB = led2;
-                    break;
-                case 2:
-                    PORTB = led3;
-                default:
-                    break;
-                }
-                return;
-            }
+    buttonpins = debounce(PIND);
+    if(bit_is_clear(buttonpins, PD5)){
+        led_counter++;
+        if(led_counter > led_max_count) {
+            led_counter = 0;
         }
-        if(bit_is_set(buttonpins,sb)) {
-            sbp = false;
-            return;
+        switch (led_counter) {
+        case 0:
+            PORTB = led1;
+            break;
+        case 1:
+            PORTB = led2;
+            break;
+        case 2:
+            PORTB = led3;
+        default:
+            break;
         }
-        _delay_ms(5);
+        while(bit_is_clear(buttonpins,PD5)) {
+            buttonpins = debounce(PIND);
+            _delay_ms(5);
+        }        
     }
-}   
+    
+}  

@@ -14,6 +14,7 @@ Discarded input sections
  .text          0x0000000000000000        0x0 interrupts.o
  .data          0x0000000000000000        0x0 interrupts.o
  .bss           0x0000000000000000        0x0 interrupts.o
+ COMMON         0x0000000000000000        0x0 interrupts.o
  .text          0x0000000000000000        0x0 main.o
  .data          0x0000000000000000        0x0 main.o
  .bss           0x0000000000000000        0x0 main.o
@@ -193,7 +194,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x0000000000000000      0x184
+.text           0x0000000000000000      0x174
  *(.vectors)
  .vectors       0x0000000000000000       0x2a /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr25/tiny-stack/crtattiny2313a.o
                 0x0000000000000000                __vectors
@@ -278,19 +279,19 @@ END GROUP
                 0x000000000000005e        0xc interrupts.o
                 0x000000000000005e                init_interrupts
  .text.__vector_20
-                0x000000000000006a       0xbe interrupts.o
+                0x000000000000006a       0xae interrupts.o
                 0x000000000000006a                __vector_20
  .text.startup.main
-                0x0000000000000128       0x1e main.o
-                0x0000000000000128                main
+                0x0000000000000118       0x1e main.o
+                0x0000000000000118                main
  .text.debounce
-                0x0000000000000146       0x3a debounce.o
-                0x0000000000000146                debounce
-                0x0000000000000180                . = ALIGN (0x2)
+                0x0000000000000136       0x3a debounce.o
+                0x0000000000000136                debounce
+                0x0000000000000170                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000000000000180        0x0 /usr/lib/gcc/avr/5.4.0/avr25/tiny-stack/libgcc.a(_exit.o)
-                0x0000000000000180                exit
-                0x0000000000000180                _exit
+ .fini9         0x0000000000000170        0x0 /usr/lib/gcc/avr/5.4.0/avr25/tiny-stack/libgcc.a(_exit.o)
+                0x0000000000000170                exit
+                0x0000000000000170                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -309,11 +310,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000000000000180        0x4 /usr/lib/gcc/avr/5.4.0/avr25/tiny-stack/libgcc.a(_exit.o)
+ .fini0         0x0000000000000170        0x4 /usr/lib/gcc/avr/5.4.0/avr25/tiny-stack/libgcc.a(_exit.o)
  *(.fini0)
-                0x0000000000000184                _etext = .
+                0x0000000000000174                _etext = .
 
-.data           0x0000000000800060        0x4 load address 0x0000000000000184
+.data           0x0000000000800060        0x4 load address 0x0000000000000174
                 0x0000000000800060                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -333,27 +334,26 @@ END GROUP
                 0x0000000000800064                _edata = .
                 0x0000000000800064                PROVIDE (__data_end, .)
 
-.bss            0x0000000000800064        0x4
+.bss            0x0000000000800064        0x3
                 0x0000000000800064                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.led_counter.2133
                 0x0000000000800064        0x1 interrupts.o
- .bss.sbp.2136  0x0000000000800065        0x1 interrupts.o
  .bss.cnt0.2130
-                0x0000000000800066        0x1 debounce.o
+                0x0000000000800065        0x1 debounce.o
  .bss.cnt1.2131
-                0x0000000000800067        0x1 debounce.o
+                0x0000000000800066        0x1 debounce.o
  *(COMMON)
-                0x0000000000800068                PROVIDE (__bss_end, .)
-                0x0000000000000184                __data_load_start = LOADADDR (.data)
-                0x0000000000000188                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000000000800067                PROVIDE (__bss_end, .)
+                0x0000000000000174                __data_load_start = LOADADDR (.data)
+                0x0000000000000178                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x0000000000800068        0x0
+.noinit         0x0000000000800067        0x0
                 [!provide]                        PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                        PROVIDE (__noinit_end, .)
-                0x0000000000800068                _end = .
+                0x0000000000800067                _end = .
                 [!provide]                        PROVIDE (__heap_start, .)
 
 .eeprom         0x0000000000810000        0x0
@@ -383,9 +383,9 @@ END GROUP
  .stab          0x0000000000000ad4      0x3cc debounce.o
                                         0x630 (size before relaxing)
 
-.stabstr        0x0000000000000000      0xfd9
+.stabstr        0x0000000000000000      0xfc4
  *(.stabstr)
- .stabstr       0x0000000000000000      0xfd9 interrupts.o
+ .stabstr       0x0000000000000000      0xfc4 interrupts.o
 
 .stab.excl
  *(.stab.excl)

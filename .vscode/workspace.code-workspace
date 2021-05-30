@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../Chapter02_Programming-AVRs/blinkLED"
+		}
+	],
+	"settings": {}
+}
