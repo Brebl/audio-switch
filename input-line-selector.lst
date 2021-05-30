@@ -1,0 +1,299 @@
+
+input-line-selector.elf:     file format elf32-avr
+
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	14 c0       	rjmp	.+40     	; 0x2a <__ctors_end>
+   2:	2c c0       	rjmp	.+88     	; 0x5c <__bad_interrupt>
+   4:	2b c0       	rjmp	.+86     	; 0x5c <__bad_interrupt>
+   6:	2a c0       	rjmp	.+84     	; 0x5c <__bad_interrupt>
+   8:	29 c0       	rjmp	.+82     	; 0x5c <__bad_interrupt>
+   a:	28 c0       	rjmp	.+80     	; 0x5c <__bad_interrupt>
+   c:	27 c0       	rjmp	.+78     	; 0x5c <__bad_interrupt>
+   e:	26 c0       	rjmp	.+76     	; 0x5c <__bad_interrupt>
+  10:	25 c0       	rjmp	.+74     	; 0x5c <__bad_interrupt>
+  12:	24 c0       	rjmp	.+72     	; 0x5c <__bad_interrupt>
+  14:	23 c0       	rjmp	.+70     	; 0x5c <__bad_interrupt>
+  16:	22 c0       	rjmp	.+68     	; 0x5c <__bad_interrupt>
+  18:	21 c0       	rjmp	.+66     	; 0x5c <__bad_interrupt>
+  1a:	20 c0       	rjmp	.+64     	; 0x5c <__bad_interrupt>
+  1c:	1f c0       	rjmp	.+62     	; 0x5c <__bad_interrupt>
+  1e:	1e c0       	rjmp	.+60     	; 0x5c <__bad_interrupt>
+  20:	1d c0       	rjmp	.+58     	; 0x5c <__bad_interrupt>
+  22:	1c c0       	rjmp	.+56     	; 0x5c <__bad_interrupt>
+  24:	1b c0       	rjmp	.+54     	; 0x5c <__bad_interrupt>
+  26:	1a c0       	rjmp	.+52     	; 0x5c <__bad_interrupt>
+  28:	20 c0       	rjmp	.+64     	; 0x6a <__vector_20>
+
+0000002a <__ctors_end>:
+  2a:	11 24       	eor	r1, r1
+  2c:	1f be       	out	0x3f, r1	; 63
+  2e:	cf ed       	ldi	r28, 0xDF	; 223
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	e4 e8       	ldi	r30, 0x84	; 132
+  3a:	f1 e0       	ldi	r31, 0x01	; 1
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	a4 36       	cpi	r26, 0x64	; 100
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_L__+0x1>
+
+00000048 <__do_clear_bss>:
+  48:	20 e0       	ldi	r18, 0x00	; 0
+  4a:	a4 e6       	ldi	r26, 0x64	; 100
+  4c:	b0 e0       	ldi	r27, 0x00	; 0
+  4e:	01 c0       	rjmp	.+2      	; 0x52 <.do_clear_bss_start>
+
+00000050 <.do_clear_bss_loop>:
+  50:	1d 92       	st	X+, r1
+
+00000052 <.do_clear_bss_start>:
+  52:	a8 36       	cpi	r26, 0x68	; 104
+  54:	b2 07       	cpc	r27, r18
+  56:	e1 f7       	brne	.-8      	; 0x50 <.do_clear_bss_loop>
+  58:	67 d0       	rcall	.+206    	; 0x128 <main>
+  5a:	92 c0       	rjmp	.+292    	; 0x180 <_exit>
+
+0000005c <__bad_interrupt>:
+  5c:	d1 cf       	rjmp	.-94     	; 0x0 <__vectors>
+
+0000005e <init_interrupts>:
+#include "main.h"
+
+void init_interrupts()
+{
+    GIMSK |= (1 << PCIE2);
+  5e:	8b b7       	in	r24, 0x3b	; 59
+  60:	80 61       	ori	r24, 0x10	; 16
+  62:	8b bf       	out	0x3b, r24	; 59
+    PCMSK2 |= (1 << PCINT16);
+  64:	2d 9a       	sbi	0x05, 5	; 5
+    sei();
+  66:	78 94       	sei
+  68:	08 95       	ret
+
+0000006a <__vector_20>:
+}
+
+ISR(PCINT2_vect) {
+  6a:	1f 92       	push	r1
+  6c:	0f 92       	push	r0
+  6e:	0f b6       	in	r0, 0x3f	; 63
+  70:	0f 92       	push	r0
+  72:	11 24       	eor	r1, r1
+  74:	2f 93       	push	r18
+  76:	3f 93       	push	r19
+  78:	4f 93       	push	r20
+  7a:	5f 93       	push	r21
+  7c:	6f 93       	push	r22
+  7e:	7f 93       	push	r23
+  80:	8f 93       	push	r24
+  82:	9f 93       	push	r25
+  84:	af 93       	push	r26
+  86:	bf 93       	push	r27
+  88:	ef 93       	push	r30
+  8a:	ff 93       	push	r31
+  8c:	cf 93       	push	r28
+  8e:	df 93       	push	r29
+  90:	1f 92       	push	r1
+  92:	cd b7       	in	r28, 0x3d	; 61
+  94:	dd 27       	eor	r29, r29
+    const uint8_t led_max_count = 2;
+    uint8_t sb = PD5;           //selector button
+    static bool sbp = false;    //selector button pressed
+    uint8_t buttonpins;
+    while(1) {
+        buttonpins = debounce(PIND);
+  96:	80 b3       	in	r24, 0x10	; 16
+  98:	56 d0       	rcall	.+172    	; 0x146 <debounce>
+  9a:	89 83       	std	Y+1, r24	; 0x01
+        if(bit_is_clear(buttonpins, sb)){
+  9c:	89 81       	ldd	r24, Y+1	; 0x01
+  9e:	85 fd       	sbrc	r24, 5
+  a0:	22 c0       	rjmp	.+68     	; 0xe6 <__stack+0x7>
+            if(!sbp) {
+  a2:	80 91 65 00 	lds	r24, 0x0065	; 0x800065 <sbp.2136>
+  a6:	81 11       	cpse	r24, r1
+  a8:	1e c0       	rjmp	.+60     	; 0xe6 <__stack+0x7>
+                sbp = true;
+  aa:	81 e0       	ldi	r24, 0x01	; 1
+  ac:	80 93 65 00 	sts	0x0065, r24	; 0x800065 <sbp.2136>
+                led_counter++;
+  b0:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <__data_end>
+  b4:	8f 5f       	subi	r24, 0xFF	; 255
+                if(led_counter > led_max_count) {
+  b6:	83 30       	cpi	r24, 0x03	; 3
+  b8:	18 f4       	brcc	.+6      	; 0xc0 <__vector_20+0x56>
+    while(1) {
+        buttonpins = debounce(PIND);
+        if(bit_is_clear(buttonpins, sb)){
+            if(!sbp) {
+                sbp = true;
+                led_counter++;
+  ba:	80 93 64 00 	sts	0x0064, r24	; 0x800064 <__data_end>
+  be:	02 c0       	rjmp	.+4      	; 0xc4 <__vector_20+0x5a>
+                if(led_counter > led_max_count) {
+                    led_counter = 0;
+  c0:	10 92 64 00 	sts	0x0064, r1	; 0x800064 <__data_end>
+                }
+                switch (led_counter) {
+  c4:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <__data_end>
+  c8:	81 30       	cpi	r24, 0x01	; 1
+  ca:	49 f0       	breq	.+18     	; 0xde <__vector_20+0x74>
+  cc:	28 f0       	brcs	.+10     	; 0xd8 <__vector_20+0x6e>
+  ce:	82 30       	cpi	r24, 0x02	; 2
+  d0:	b9 f4       	brne	.+46     	; 0x100 <__stack+0x21>
+                    break;
+                case 1:
+                    PORTB = led2;
+                    break;
+                case 2:
+                    PORTB = led3;
+  d2:	80 91 61 00 	lds	r24, 0x0061	; 0x800061 <led3>
+  d6:	05 c0       	rjmp	.+10     	; 0xe2 <__stack+0x3>
+                if(led_counter > led_max_count) {
+                    led_counter = 0;
+                }
+                switch (led_counter) {
+                case 0:
+                    PORTB = led1;
+  d8:	80 91 63 00 	lds	r24, 0x0063	; 0x800063 <led1>
+  dc:	02 c0       	rjmp	.+4      	; 0xe2 <__stack+0x3>
+                    break;
+                case 1:
+                    PORTB = led2;
+  de:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <led2>
+                    break;
+                case 2:
+                    PORTB = led3;
+  e2:	88 bb       	out	0x18, r24	; 24
+  e4:	0d c0       	rjmp	.+26     	; 0x100 <__stack+0x21>
+                    break;
+                }
+                return;
+            }
+        }
+        if(bit_is_set(buttonpins,sb)) {
+  e6:	89 81       	ldd	r24, Y+1	; 0x01
+  e8:	85 ff       	sbrs	r24, 5
+  ea:	03 c0       	rjmp	.+6      	; 0xf2 <__stack+0x13>
+            sbp = false;
+  ec:	10 92 65 00 	sts	0x0065, r1	; 0x800065 <sbp.2136>
+            return;
+  f0:	07 c0       	rjmp	.+14     	; 0x100 <__stack+0x21>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  f2:	81 ee       	ldi	r24, 0xE1	; 225
+  f4:	94 e0       	ldi	r25, 0x04	; 4
+  f6:	01 97       	sbiw	r24, 0x01	; 1
+  f8:	f1 f7       	brne	.-4      	; 0xf6 <__stack+0x17>
+  fa:	00 c0       	rjmp	.+0      	; 0xfc <__stack+0x1d>
+  fc:	00 00       	nop
+  fe:	cb cf       	rjmp	.-106    	; 0x96 <__vector_20+0x2c>
+        }
+        _delay_ms(5);
+    }
+ 100:	0f 90       	pop	r0
+ 102:	df 91       	pop	r29
+ 104:	cf 91       	pop	r28
+ 106:	ff 91       	pop	r31
+ 108:	ef 91       	pop	r30
+ 10a:	bf 91       	pop	r27
+ 10c:	af 91       	pop	r26
+ 10e:	9f 91       	pop	r25
+ 110:	8f 91       	pop	r24
+ 112:	7f 91       	pop	r23
+ 114:	6f 91       	pop	r22
+ 116:	5f 91       	pop	r21
+ 118:	4f 91       	pop	r20
+ 11a:	3f 91       	pop	r19
+ 11c:	2f 91       	pop	r18
+ 11e:	0f 90       	pop	r0
+ 120:	0f be       	out	0x3f, r0	; 63
+ 122:	0f 90       	pop	r0
+ 124:	1f 90       	pop	r1
+ 126:	18 95       	reti
+
+00000128 <main>:
+const uint8_t push_button = (1 << PD5);
+
+int main(void)
+{    
+    //led output
+    DDRB = led1 | led2 | led3;
+ 128:	87 e0       	ldi	r24, 0x07	; 7
+ 12a:	87 bb       	out	0x17, r24	; 23
+    //push button input
+    PORTD = push_button;
+ 12c:	80 e2       	ldi	r24, 0x20	; 32
+ 12e:	82 bb       	out	0x12, r24	; 18
+    
+    init_interrupts();
+ 130:	96 df       	rcall	.-212    	; 0x5e <init_interrupts>
+    set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+ 132:	85 b7       	in	r24, 0x35	; 53
+ 134:	80 65       	ori	r24, 0x50	; 80
+ 136:	85 bf       	out	0x35, r24	; 53
+
+    while (1) {     
+        sleep_mode();
+ 138:	85 b7       	in	r24, 0x35	; 53
+ 13a:	80 62       	ori	r24, 0x20	; 32
+ 13c:	85 bf       	out	0x35, r24	; 53
+ 13e:	88 95       	sleep
+ 140:	85 b7       	in	r24, 0x35	; 53
+ 142:	8f 7d       	andi	r24, 0xDF	; 223
+ 144:	f8 cf       	rjmp	.-16     	; 0x136 <main+0xe>
+
+00000146 <debounce>:
+{
+    static uint8_t state = 0xff;
+    static uint8_t cnt0, cnt1;
+    uint8_t delta;
+
+    delta = sample ^ state;
+ 146:	40 91 60 00 	lds	r20, 0x0060	; 0x800060 <__data_start>
+ 14a:	54 2f       	mov	r21, r20
+ 14c:	58 27       	eor	r21, r24
+    cnt1 = (cnt1 ^ cnt0) & (delta & sample);
+ 14e:	60 91 66 00 	lds	r22, 0x0066	; 0x800066 <cnt0.2130>
+ 152:	28 2f       	mov	r18, r24
+ 154:	25 23       	and	r18, r21
+ 156:	30 91 67 00 	lds	r19, 0x0067	; 0x800067 <cnt1.2131>
+ 15a:	96 2f       	mov	r25, r22
+ 15c:	93 27       	eor	r25, r19
+ 15e:	39 2f       	mov	r19, r25
+ 160:	32 23       	and	r19, r18
+ 162:	30 93 67 00 	sts	0x0067, r19	; 0x800067 <cnt1.2131>
+    cnt0 = ~cnt0 & (delta & sample);
+ 166:	96 2f       	mov	r25, r22
+ 168:	90 95       	com	r25
+ 16a:	92 23       	and	r25, r18
+ 16c:	90 93 66 00 	sts	0x0066, r25	; 0x800066 <cnt0.2130>
+    state ^= (delta & ~(cnt0 | cnt1));
+ 170:	93 2b       	or	r25, r19
+ 172:	90 95       	com	r25
+ 174:	95 23       	and	r25, r21
+ 176:	89 2f       	mov	r24, r25
+ 178:	84 27       	eor	r24, r20
+ 17a:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__data_start>
+    return state;
+ 17e:	08 95       	ret
+
+00000180 <_exit>:
+ 180:	f8 94       	cli
+
+00000182 <__stop_program>:
+ 182:	ff cf       	rjmp	.-2      	; 0x182 <__stop_program>
