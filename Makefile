@@ -8,7 +8,7 @@
 ##########------------------------------------------------------##########
 
 MCU   = attiny2313a
-F_CPU = 1000000UL  
+F_CPU = 1000000UL
 BAUD  = 9600UL
 ## Also try BAUD = 19200 or 38400 if you're feeling lucky.
 
@@ -25,7 +25,7 @@ LIBDIR = .
 
 PROGRAMMER_TYPE = avrispmkII
 # extra arguments to avrdude: baud rate, chip type, -F flag, etc.
-PROGRAMMER_ARGS = -P "/dev/ttyUSB0"	-C "/home/batman/avrdude.conf"
+PROGRAMMER_ARGS = -P "/dev/ttyUSB0" -C "/home/batman/avrdude.conf"
 
 ##########------------------------------------------------------##########
 ##########                  Program Locations                   ##########
@@ -163,7 +163,7 @@ flash_109: flash
 ##########------------------------------------------------------##########
 
 ## default fuses
-DEF-LFUSE = 0x62				
+DEF-LFUSE = 0x62
 DEF-HFUSE = 0xdf
 DEF-EFUSE = 0xff
 

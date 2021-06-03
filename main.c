@@ -1,19 +1,13 @@
 #include "main.h" 
 
-const uint8_t led1 = (1 << PB0);
-const uint8_t led2 = (1 << PB1);
-const uint8_t led3 = (1 << PB2);
-const uint8_t push_button = (1 << PD5);
-
 int main(void)
 {    
-    //led output
-    DDRB = led1 | led2 | led3;
-    //push button input
-    PORTD = push_button;
+    DDRB = (1 << LED0) | (1 << LED1) | (1 << LED2);
+    DDRD = (1 << TRAN0) | (1 << TRAN1);
+    PORTD = (1 << PUSH_BUTTON);
     
     init_interrupts();
-    set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+    set_sleep_mode(SLEEP_MODE_IDLE);
 
     while (1) {     
         sleep_mode();
