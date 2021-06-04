@@ -9,15 +9,15 @@ void init_interrupts()
 {
     GIMSK |= (1 << PCIE2);
     PCMSK2 |= (1 << PCINT16);
-    sei();
-}
-
-//push button logic
-ISR(PCINT2_vect) {  
     TCCR0A |= (1 << WGM01);                 //ctc
     TCCR0B |= (1 << CS00) | (1 << CS02);    //1024 prescaler
     OCR0A = 0xf4;                           //~4Hz
     TIMSK |= (1 << OCIE0A);                 //ocr-a enable
+    sei();
+}
+
+//push button logic
+ISR(PCINT2_vect) {
     PRR = 0;
     uint8_t buttonpins = debounce(PUSH_BUTTON_PORT);
     if(bit_is_clear(buttonpins, PUSH_BUTTON)){
@@ -56,16 +56,13 @@ ISR(PCINT2_vect) {
     }  
 }
 
-//turn leds off after timeout_max
+//hibernate after timeout_max, leds off, transistors stay on
 ISR(TIMER0_COMPA_vect)  
 {
     timeout_counter++;
     if(timeout_counter >= timeout_max) {
         timeout_counter = 0;
         leds_off();
-        TCCR0A = 0;
-        TCCR0B = 0;
-        TIMSK = 0;
-        PRR = 0xFF;
+        PRR = 0x0F;
     }
 }
