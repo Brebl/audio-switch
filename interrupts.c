@@ -2,8 +2,7 @@
 static uint8_t timeout_counter = 0;
 const uint8_t timeout_max = 4*10;
 static uint8_t led_counter = 0;
-const uint8_t led_max_count = 2;
-
+const uint8_t led_max_count = 4;
 
 void init_interrupts()
 {
@@ -28,25 +27,30 @@ ISR(PCINT2_vect) {
             led_counter = 0;
         }
         timeout_counter = 0;
+        leds_off();
+        transistors_off();
         switch (led_counter) {
         case 0:
-            leds_off();
-            transistors_off();
             LED_PORT |= (1 << LED0);
             TRANSISTOR_PORT |= (1 << TRAN0);
             break;
         case 1:
-            leds_off();
-            transistors_off();
             LED_PORT |= (1 << LED1);
             TRANSISTOR_PORT |= (1 << TRAN1);
             break;
         case 2:
-            leds_off();
-            transistors_off();
             LED_PORT |= (1 << LED2);
             TRANSISTOR_PORT |= (1 << TRAN2);
+            break;
+        case 3:
+            LED_PORT |= (1 << LED3);
+            TRANSISTOR_PORT |= (1 << TRAN3);
+            break;
+        case 4:
+            LED_PORT |= (1 << LED4);
+            TRANSISTOR_PORT |= (1 << TRAN4);
         default:
+            LED_PORT = 0xFF;
             break;
         }
         while(bit_is_clear(buttonpins,PUSH_BUTTON)) {
