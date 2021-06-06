@@ -1,8 +1,8 @@
 #include "main.h"
 static uint8_t timeout_counter = 0;
-const uint8_t timeout_max = 4*3;
+const uint8_t timeout_max = 4*10;           //4*secs
 static uint8_t led_counter = 0;
-const uint8_t led_max_count = 4;
+const uint8_t led_max_count = 5;
 
 void init_interrupts()
 {
@@ -24,7 +24,7 @@ ISR(PCINT2_vect) {
         if(LED_PORT != 0) {
             led_counter++;
         }
-        if(led_counter > led_max_count) {
+        if(led_counter >= led_max_count) {
             led_counter = 0;
         }
         timeout_counter = 0;
