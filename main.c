@@ -7,9 +7,8 @@ int main(void)
     PORTD = (1 << PUSH_BUTTON);
     
     init_interrupts();
-    set_sleep_mode(SLEEP_MODE_IDLE);
 
-    while (1) {     
+    while (1) {   
         sleep_mode();
     }
     return 0;

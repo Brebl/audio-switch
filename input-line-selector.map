@@ -206,7 +206,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x0000000000000000      0x1f2
+.text           0x0000000000000000      0x200
  *(.vectors)
  .vectors       0x0000000000000000       0x2a /usr/lib/gcc/avr/5.4.0/../../../avr/lib/avr25/tiny-stack/crtattiny2313a.o
                 0x0000000000000000                __vectors
@@ -287,25 +287,25 @@ END GROUP
                 0x000000000000005e                . = ALIGN (0x2)
  *(.text.*)
  .text.init_interrupts
-                0x000000000000005e       0x22 interrupts.o
+                0x000000000000005e       0x28 interrupts.o
                 0x000000000000005e                init_interrupts
  .text.__vector_20
-                0x0000000000000080       0xde interrupts.o
-                0x0000000000000080                __vector_20
+                0x0000000000000086       0xe8 interrupts.o
+                0x0000000000000086                __vector_20
  .text.__vector_13
-                0x000000000000015e       0x36 interrupts.o
-                0x000000000000015e                __vector_13
+                0x000000000000016e       0x38 interrupts.o
+                0x000000000000016e                __vector_13
  .text.startup.main
-                0x0000000000000194       0x20 main.o
-                0x0000000000000194                main
+                0x00000000000001a6       0x1c main.o
+                0x00000000000001a6                main
  .text.debounce
-                0x00000000000001b4       0x3a debounce.o
-                0x00000000000001b4                debounce
-                0x00000000000001ee                . = ALIGN (0x2)
+                0x00000000000001c2       0x3a debounce.o
+                0x00000000000001c2                debounce
+                0x00000000000001fc                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000000000001ee        0x0 /usr/lib/gcc/avr/5.4.0/avr25/tiny-stack/libgcc.a(_exit.o)
-                0x00000000000001ee                exit
-                0x00000000000001ee                _exit
+ .fini9         0x00000000000001fc        0x0 /usr/lib/gcc/avr/5.4.0/avr25/tiny-stack/libgcc.a(_exit.o)
+                0x00000000000001fc                exit
+                0x00000000000001fc                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -324,11 +324,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000000000001ee        0x4 /usr/lib/gcc/avr/5.4.0/avr25/tiny-stack/libgcc.a(_exit.o)
+ .fini0         0x00000000000001fc        0x4 /usr/lib/gcc/avr/5.4.0/avr25/tiny-stack/libgcc.a(_exit.o)
  *(.fini0)
-                0x00000000000001f2                _etext = .
+                0x0000000000000200                _etext = .
 
-.data           0x0000000000800060        0x2 load address 0x00000000000001f2
+.data           0x0000000000800060        0x2 load address 0x0000000000000200
                 0x0000000000800060                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -357,8 +357,8 @@ END GROUP
                 0x0000000000800065        0x1 debounce.o
  *(COMMON)
                 0x0000000000800066                PROVIDE (__bss_end, .)
-                0x00000000000001f2                __data_load_start = LOADADDR (.data)
-                0x00000000000001f4                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000000000000200                __data_load_start = LOADADDR (.data)
+                0x0000000000000202                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0000000000800066        0x0
                 [!provide]                        PROVIDE (__noinit_start, .)
@@ -386,12 +386,12 @@ END GROUP
 .user_signatures
  *(.user_signatures*)
 
-.stab           0x0000000000000000     0x1008
+.stab           0x0000000000000000     0x102c
  *(.stab)
- .stab          0x0000000000000000      0x8b8 interrupts.o
- .stab          0x00000000000008b8      0x384 main.o
-                                        0x5e8 (size before relaxing)
- .stab          0x0000000000000c3c      0x3cc debounce.o
+ .stab          0x0000000000000000      0x8e8 interrupts.o
+ .stab          0x00000000000008e8      0x378 main.o
+                                        0x5dc (size before relaxing)
+ .stab          0x0000000000000c60      0x3cc debounce.o
                                         0x630 (size before relaxing)
 
 .stabstr        0x0000000000000000     0x1011

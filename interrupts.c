@@ -1,6 +1,6 @@
 #include "main.h"
 static uint8_t timeout_counter = 0;
-const uint8_t timeout_max = 4*10;
+const uint8_t timeout_max = 4*3;
 static uint8_t led_counter = 0;
 const uint8_t led_max_count = 4;
 
@@ -13,11 +13,12 @@ void init_interrupts()
     OCR0A = 0xf4;                           //~4Hz
     TIMSK |= (1 << OCIE0A);                 //ocr-a enable
     sei();
+    set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 }
 
 //push button logic
 ISR(PCINT2_vect) {
-    PRR = 0;
+    set_sleep_mode(SLEEP_MODE_IDLE);
     uint8_t buttonpins = debounce(PUSH_BUTTON_PORT);
     if(bit_is_clear(buttonpins, PUSH_BUTTON)){
         if(LED_PORT != 0) {
@@ -49,6 +50,7 @@ ISR(PCINT2_vect) {
         case 4:
             LED_PORT |= (1 << LED4);
             TRANSISTOR_PORT |= (1 << TRAN4);
+            break;
         default:
             LED_PORT = 0xFF;
             break;
@@ -67,6 +69,6 @@ ISR(TIMER0_COMPA_vect)
     if(timeout_counter >= timeout_max) {
         timeout_counter = 0;
         leds_off();
-        PRR = 0x0F;
+        set_sleep_mode(SLEEP_MODE_PWR_DOWN);
     }
 }
