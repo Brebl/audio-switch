@@ -12,10 +12,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-// These are optional, but nice to have around.
-// Feel free to comment them out if you don't use them.
-#include "macros.h"
-
 #define PUSH_BUTTON PD5
 #define PUSH_BUTTON_PORT PIND
 

@@ -1,0 +1,2 @@
+unused pins
+internsl oscillator
