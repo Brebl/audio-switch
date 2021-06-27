@@ -1,16 +1,27 @@
 #include "main.h"
 static uint8_t timeout_counter = 0;
-const uint8_t timeout_max = 4*10;           //4*secs
+const uint8_t timeout_max = 10;           //secs
 static uint8_t led_counter = 0;
 const uint8_t led_max_count = 5;
 
 void init_interrupts()
 {
+    /********************
+    clock 128kHz
+    * 
+    prescaler 1024
+    --------------
+    == clock tick time 8000us
+    *
+    output compare register 125
+    ---------------------------
+    == 1Hz
+    **********************/
     GIMSK |= (1 << PCIE2);
     PCMSK2 |= (1 << PCINT16);
     TCCR0A |= (1 << WGM01);                 //ctc
     TCCR0B |= (1 << CS00) | (1 << CS02);    //1024 prescaler
-    OCR0A = 0xf4;                           //~4Hz
+    OCR0A = 0x7d;                           //125
     TIMSK |= (1 << OCIE0A);                 //ocr-a enable
     sei();
     set_sleep_mode(SLEEP_MODE_PWR_DOWN);
@@ -62,7 +73,7 @@ ISR(PCINT2_vect) {
     }  
 }
 
-//hibernate after timeout_max, leds off, transistors stay on
+//power down after timeout_max, leds off, transistors stay on
 ISR(TIMER0_COMPA_vect)  
 {
     timeout_counter++;
