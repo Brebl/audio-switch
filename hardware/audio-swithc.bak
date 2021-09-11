@@ -313,7 +313,7 @@ Text GLabel 4700 3200 2    50   Output ~ 0
 audio_2
 Text GLabel 4700 3300 2    50   Output ~ 0
 audio_3
-Text GLabel 4700 3400 2    50   Output ~ 0
+Text GLabel 4700 3400 2    50   BiDi ~ 0
 audio_4
 $Comp
 L MCU_Microchip_ATtiny:ATtiny2313A-PU U1

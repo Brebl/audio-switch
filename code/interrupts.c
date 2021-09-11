@@ -32,7 +32,7 @@ ISR(PCINT2_vect) {
     set_sleep_mode(SLEEP_MODE_IDLE);
     uint8_t buttonpins = debounce(PUSH_BUTTON_PORT);
     if(bit_is_clear(buttonpins, PUSH_BUTTON)){
-        if(LED_PORT != 0) {
+        if(checkleds()) {
             led_counter++;
         }
         if(led_counter >= led_max_count) {
@@ -43,30 +43,31 @@ ISR(PCINT2_vect) {
         transistors_off();
         switch (led_counter) {
         case 0:
-            LED_PORT |= (1 << LED0);
-            TRANSISTOR_PORT |= (1 << TRAN0);
+            LED1_ON;
+            TRAN1_ON;
             break;
         case 1:
-            LED_PORT |= (1 << LED1);
-            TRANSISTOR_PORT |= (1 << TRAN1);
+            LED2_ON;
+            TRAN2_ON;
             break;
         case 2:
-            LED_PORT |= (1 << LED2);
-            TRANSISTOR_PORT |= (1 << TRAN2);
+            LED3_ON;
+            TRAN3_ON;
             break;
         case 3:
-            LED_PORT |= (1 << LED3);
-            TRANSISTOR_PORT |= (1 << TRAN3);
+            LED4_ON;
+            TRAN4_ON;
             break;
         case 4:
-            LED_PORT |= (1 << LED4);
-            TRANSISTOR_PORT |= (1 << TRAN4);
+            LED5_ON;
+            TRAN5_ON;
             break;
         case 5:
-            
-            TRANSISTOR_PORT |= (1 << TRAN5);
+            LED6_ON;
+            TRAN6_ON;
+            break;
         default:
-            LED_PORT = 0xFF;
+            leds_off();
             break;
         }
         while(bit_is_clear(buttonpins,PUSH_BUTTON)) {

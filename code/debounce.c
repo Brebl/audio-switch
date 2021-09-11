@@ -1,3 +1,4 @@
+//https://www.compuphase.com/electronics/debouncing.htm
 #include "main.h"
 
 uint8_t debounce(uint8_t sample)
