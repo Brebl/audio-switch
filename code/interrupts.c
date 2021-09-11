@@ -62,6 +62,9 @@ ISR(PCINT2_vect) {
             LED_PORT |= (1 << LED4);
             TRANSISTOR_PORT |= (1 << TRAN4);
             break;
+        case 5:
+            
+            TRANSISTOR_PORT |= (1 << TRAN5);
         default:
             LED_PORT = 0xFF;
             break;

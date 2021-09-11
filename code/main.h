@@ -27,6 +27,7 @@
 #define TRAN2 PD2
 #define TRAN3 PD3
 #define TRAN4 PD4
+#define TRAN5 PD5
 #define TRANSISTOR_PORT PORTD
 
 uint8_t debounce(uint8_t sample);
