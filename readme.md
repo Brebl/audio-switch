@@ -8,8 +8,10 @@ Also decent sound is a one goal.
 Press of a button tells you via led which audio line is selected. Pressing the button again changes the input line. After 10 secs or so, leds turn off to save power. There's also possibility to add lcd display like HD44780 in place of those leds.
 
 For to flash your mcu, run
-    make fuses
-    make flash
+```shell
+make fuses
+make flash
+```
 
 ## Hardware  
 
