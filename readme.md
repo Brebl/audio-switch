@@ -2,11 +2,11 @@
 
 This is an avr project for selecting one audio signal from multiple input lines.\
 The project is designed to minimize power consumption by making use of sleep modes, interrupts and internal timers.\
-Also decent sound is a one goal.\
+Also decent sound is a one goal.
 
 ## Code / operation
 
-Press of a button tells you via led which audio line is selected. Pressing the button again changes the input line. After 10 secs or so, leds turn off to save power. There's also possibility to add lcd display like HD44780 in place of those leds.\
+Press of a button tells you via led which audio line is selected. Pressing the button again changes the input line. After 10 secs or so, leds turn off to save power. There's also possibility to add lcd display like HD44780 in place of those leds.
 
 For to flash your mcu, run
     make fuses
