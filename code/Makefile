@@ -25,7 +25,7 @@ LIBDIR = .
 
 PROGRAMMER_TYPE = avrispmkII
 # extra arguments to avrdude: baud rate, chip type, -F flag, etc.
-PROGRAMMER_ARGS = -P "/dev/ttyUSB0" -C "/home/batman/avrdude.conf" -B 400
+PROGRAMMER_ARGS = -P "/dev/ttyUSB0" -C "$${HOME}/scripts/avrdude.conf" -B 400
 
 ##########------------------------------------------------------##########
 ##########                  Program Locations                   ##########
