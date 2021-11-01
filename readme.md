@@ -1,7 +1,6 @@
 # Audio switch   
 
-This is an avr project for selecting one audio signal from multiple input lines.\
-The project is designed to minimize power consumption by making use of sleep modes, interrupts and internal timers.\
+This is an avr project for selecting one audio signal from multiple input lines. The project is designed to minimize power consumption by making use of sleep modes, interrupts and internal timers.\
 Also decent sound is a one goal.
 
 ## Code / operation
