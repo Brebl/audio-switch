@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define PUSH_BUTTON PD5
+#define PUSH_BUTTON PD6
 #define PUSH_BUTTON_PORT PIND
 
 #define LED1 PB4
