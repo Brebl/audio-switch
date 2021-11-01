@@ -19,7 +19,7 @@ BC547 Transistors had a nasty habit of making clicking sound when the emitter cu
 
 ### Board\
 
-Here's my printed circuit board I ordered from pcbway.com.\
+Here's my printed circuit board I ordered from a fabricator pcbway.com\
 ![Front](/pics/front.jpg "Front")
 ![Back](/pics/back.jpg "Back")
 
