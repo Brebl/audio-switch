@@ -2,7 +2,7 @@
 static uint8_t timeout_counter = 0;
 const uint8_t timeout_max = 10;           //secs
 static uint8_t led_counter = 0;
-const uint8_t led_max_count = 5;
+const uint8_t led_max_count = 2;
 
 void init_interrupts()
 {
@@ -18,7 +18,7 @@ void init_interrupts()
     == 1Hz
     **********************/
     GIMSK |= (1 << PCIE2);
-    PCMSK2 |= (1 << PCINT16);
+    PCMSK2 |= (1 << PCINT17);
     TCCR0A |= (1 << WGM01);                 //ctc
     TCCR0B |= (1 << CS00) | (1 << CS02);    //1024 prescaler
     OCR0A = 0x7d;                           //125
