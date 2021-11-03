@@ -1,6 +1,6 @@
 # Audio switch   
 
-This is an avr project for selecting one audio signal from multiple input lines. The project is designed to minimize power consumption by making use of sleep modes, interrupts and internal timers.\
+This is an avr project for selecting one audio signal from multiple input lines (6-port maximum). The project is designed to minimize power consumption by making use of sleep modes, interrupts and internal timers.\
 Also decent sound is a one goal.
 
 ## Layout
@@ -38,4 +38,4 @@ Here's my printed circuit board I ordered from a fabricator pcbway.com\
 
 Voltage: 5V\
 Current: 0,11mA\
-6-channel max
+Audio connection: max 6x stereo in, 1x stereo out
