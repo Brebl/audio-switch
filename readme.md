@@ -5,7 +5,7 @@ Also decent sound is a one goal.
 
 ## Layout
 
-A working 2-port setup (except power source).\
+A working 2-port setup.\
 ![Test setup](/pics/test_setup.jpg)
 
 ## Code / operation
