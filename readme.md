@@ -26,7 +26,7 @@ make flash
 ## Hardware  
 
 I'm using Atmel's Attiny2313a MCU, with internal 128 kHz oscillator. ISP programmer needs to be slowed down because of this low power oscillator. (avrdude -B option)
-BC547 Transistors had a nasty habit of making clicking sound when the emitter current went on/off, so I switched to CD4066B CMOS Quad Bilateral Switch, which works nice. This pcb feature a 6-pin male ISP connector for programming. Powering this device could be made through USB. Board is designed using KiCad software.
+BC547 Transistors had a nasty habit of making clicking sound when the emitter current went on/off, so I switched to CD4066B CMOS Quad Bilateral Switch, which works nice. This pcb feature a 10-pin male ISP connector for programming. Powering this device could be made through USB. Board is designed using KiCad software.
 
 ### Board
 
