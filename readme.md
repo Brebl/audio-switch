@@ -12,9 +12,9 @@ A working 2-port setup.\
 
 Press of a button tells you via led which audio line is selected. Pressing the button again changes the input line. After 10 secs or so, leds turn off to save power. There's also possibility to add lcd display like HD44780 in place of those leds.
 
-Toolchain I use, includes
+To get this working you can use a toolchain
 ```
-avrdude avrdude-doc binutils-avr avr-libc gcc-avr gdb-avr
+avr-libc gcc-avr binutils-avr avrdude
 ```
 
 For to flash your MCU, run
