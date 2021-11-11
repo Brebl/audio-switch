@@ -30,8 +30,8 @@ void init_interrupts()
 //push button logic
 ISR(PCINT2_vect) {
     set_sleep_mode(SLEEP_MODE_IDLE);
-    uint8_t buttonpins = debounce(PUSH_BUTTON_PORT);
-    if(bit_is_clear(buttonpins, PUSH_BUTTON)){
+    uint8_t buttonpin = debounce(PUSH_BUTTON_PORT);
+    if(bit_is_clear(buttonpin, PUSH_BUTTON)){
         if(checkleds()) {
             led_counter++;
         }
@@ -70,8 +70,8 @@ ISR(PCINT2_vect) {
             leds_off();
             break;
         }
-        while(bit_is_clear(buttonpins,PUSH_BUTTON)) {
-            buttonpins = debounce(PUSH_BUTTON_PORT);
+        while(bit_is_clear(buttonpin,PUSH_BUTTON)) {
+            buttonpin = debounce(PUSH_BUTTON_PORT);
             _delay_ms(5);
         }        
     }  
