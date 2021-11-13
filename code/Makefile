@@ -29,11 +29,10 @@ EFUSE 			:= 0xff
 CFLAGS	 		= -Os -g -Wall -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -ffunction-sections -fdata-sections $(DEFS) $(INC)
 DEFS			= -std=gnu11 -DF_CPU=$(F_CPU) -DBAUD=$(BAUD) -mmcu=$(MCU)
 INC				= -iquote $(incdir)
-LDFLAGS			= -Map=$(builddir)/$(TARGET).map --gc-sections
+LDFLAGS			= -Wl,-Map,$(builddir)/$(TARGET).map -Wl,--gc-sections -mmcu=$(MCU)
 
 #software
 CC	 			:= avr-gcc
-LD				:= avr-ld
 OBJCOPY 		:= avr-objcopy
 OBJDUMP 		:= avr-objdump
 AVRSIZE 		:= avr-size
@@ -94,7 +93,7 @@ build: $(BUILD)
 
 $(BUILD): $(OBJS)
 	@echo [LINK]
-	$(LD) $(LDFLAGS) $^ -o $(builddir)/$(TARGET).elf
+	$(CC) $(LDFLAGS) $^ -o $(builddir)/$(TARGET).elf
 	$(OBJCOPY) -j .text -j .data -O ihex $(builddir)/$(TARGET).elf $(builddir)/$(TARGET).hex
 	@touch $@
 
@@ -180,8 +179,6 @@ show_fuses:
 flash: $(BUILD)
 	$(AVRDUDE) -c $(PROGRAMMER_TYPE) -p $(MCU) $(PROGRAMMER_ARGS) -U flash:w:$(builddir)/$(TARGET).hex
 
-eeprom: $(BUILD)
+flash_eeprom: $(BUILD)
 	$(OBJCOPY) -j .eeprom --change-section-lma .eeprom=0 -O ihex $(builddir)/$(TARGET).elf $(builddir)/$(TARGET).eeprom
-
-flash_eeprom: eeprom
 	$(AVRDUDE) -c $(PROGRAMMER_TYPE) -p $(MCU) $(PROGRAMMER_ARGS) -U eeprom:w:$(builddir)/$(TARGET).eeprom
