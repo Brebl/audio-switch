@@ -4,3 +4,6 @@
 *.lst
 *.o
 *.bak
+*.lastbuild
+*.dep
+*.eeprom
