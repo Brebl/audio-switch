@@ -122,14 +122,15 @@ size: $(BUILD)
 clean:
 	@echo [CLEAN]
 ifdef builddir
-	rm -f $(builddir)/*
+	rm -rf $(builddir)/*
 endif
-	rm -f $(OBJS) $(DEPENDENCY) $(BUILD)
-
-realclean: clean
-	@echo [REALCLEAN]
-	rm -r $(objdir)/*
-	rm -r $(depdir)/*
+ifdef objdir
+	rm -rf $(objdir)/*
+	rm -rf $(BUILD)
+endif
+ifdef depdir
+	rm -rf $(depdir)/*
+endif
 
 rebuild: clean
 	@echo
