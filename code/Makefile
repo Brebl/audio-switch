@@ -12,7 +12,7 @@
 SHELL = /bin/bash
 
 .SUFFIXES:
-.SUFFIXES: .c .o .h .dep .elf .map .hex
+.SUFFIXES: .c .o .h .dep
 
 #hardware
 TARGET 			:= audio_switch
