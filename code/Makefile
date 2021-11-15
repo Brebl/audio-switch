@@ -16,13 +16,17 @@ SHELL = /bin/bash
 
 #hardware
 TARGET 			:= audio_switch
+TYPE			:= LED-version
+VER				:= $(shell git tag | sed -n '$$p')
 MCU   			:= attiny2313a
 F_CPU 			:= 128000UL
 BAUD  			:= 9600UL
 PROGRAMMER_TYPE := avrispmkII
 PROGRAMMER_ARGS  = -P "/dev/ttyUSB0" -C "$(resdir)/avrdude.conf" -B 400
-LFUSE 			:= 0xe6	# bit: 0000 0001 0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111
-HFUSE 			:= 0xdf # Hex: 0	1    2	  3	   4	5	 6	  7	   8	9	 A	  B	   C    D	 E	  F
+# bit: 0000 0001 0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111
+# Hex: 0	1    2	  3	   4	5	 6	  7	   8	9	 A	  B	   C    D	 E	  F
+LFUSE 			:= 0xe6
+HFUSE 			:= 0xdf
 EFUSE 			:= 0xff
 
 #compiler/linker options
@@ -80,7 +84,7 @@ vpath %.c		$(srcdirs)
 vpath %.dep		$(depdir)
 vpath %.o 		$(objdir)
 
-.PHONY: all build disassemble clean realclean rebuild installdirs debug fuses default_fuses show_fuses flash eeprom flash_eeprom
+.PHONY: all build disassemble clean realclean rebuild installdirs debug fuses default_fuses show_fuses flash write_eeprom read_eeprom
 
 ################################
 # Make
@@ -105,8 +109,7 @@ $(objdir)/%.o : %.c %.dep
 # Dependency generation:
 # dep/main.dep: src/main.c inc/header.h
 $(depdir)/%.dep : %.c Makefile | $(dirs)
-	@echo [DEPENDENCY]
-	$(CC) -c $(CFLAGS) \
+	@$(CC) -c $(CFLAGS) \
 	-MM -MP -MT $@ $< \
 	> $@
 
@@ -133,7 +136,6 @@ ifdef depdir
 endif
 
 rebuild: clean
-	@echo
 	@echo [REBUILD]
 	$(MAKE)
 
@@ -147,6 +149,9 @@ installdirs:
 
 debug:
 	@echo [DEBUG]
+	@echo "TARGET:	"$(TARGET)
+	@echo "TYPE:	"$(TYPE)
+	@echo "VER:		"$(VER)
 	@echo "dirs:	"$(dirs)
 	@echo "SRCS:	"$(SRCS)
 	@echo "OBJS:	"$(OBJS)
@@ -178,8 +183,18 @@ show_fuses:
 ################################
 
 flash: $(BUILD)
+	@echo [FLASH]
 	$(AVRDUDE) -c $(PROGRAMMER_TYPE) -p $(MCU) $(PROGRAMMER_ARGS) -U flash:w:$(builddir)/$(TARGET).hex
+	$(MAKE) write_eeprom
 
-flash_eeprom: $(BUILD)
-	$(OBJCOPY) -j .eeprom --change-section-lma .eeprom=0 -O ihex $(builddir)/$(TARGET).elf $(builddir)/$(TARGET).eeprom
-	$(AVRDUDE) -c $(PROGRAMMER_TYPE) -p $(MCU) $(PROGRAMMER_ARGS) -U eeprom:w:$(builddir)/$(TARGET).eeprom
+%.eeprom: $(BUILD)
+	@echo $(TARGET) > $@
+	@echo $(TYPE) >> $@
+	@echo $(VER) >> $@
+
+write_eeprom: $(builddir)/$(TARGET).eeprom
+	@echo [EEPROM]
+	$(AVRDUDE) -c $(PROGRAMMER_TYPE) -p $(MCU) $(PROGRAMMER_ARGS) -U eeprom:w:$<:r
+
+read_eeprom:
+	$(AVRDUDE) -c $(PROGRAMMER_TYPE) -p $(MCU) $(PROGRAMMER_ARGS) -U eeprom:r:- | tr -dc '\0-\177'
