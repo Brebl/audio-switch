@@ -5,8 +5,8 @@ Also decent sound is a one goal.
 
 ## Layout
 
-A working 2-port setup.\
-![Test setup](/pics/test_setup.jpg)
+5-port setup with HD44780 display, installed in 3.5" FDD mounting bracket.\
+![Test setup](/pics/display_setup.jpg)
 
 ## Code / operation
 
