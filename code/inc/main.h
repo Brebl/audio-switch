@@ -1,4 +1,5 @@
-// Standard AVR includes
+#ifndef MAIN_H
+#define MAIN_H
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
@@ -7,35 +8,24 @@
 #include <avr/sleep.h>
 #include <avr/wdt.h>
 #include <avr/power.h>
-
-// Standard includes
 #include <stdlib.h>
 #include <stdbool.h>
+
+#define INIT    DDRD |= 0x1f; \
+                PORTD |= 0x40
 
 #define PUSH_BUTTON PD6
 #define PUSH_BUTTON_PORT PIND
 
-#define LED1 PB4
-#define LED2 PB3
-#define LED3 PB2
-#define LED4 PA0
-#define LED5 PB1
-#define LED6 PB0
+//audioport names printed on LCD
+#define AUDIO1 "    Computer    "
+#define AUDIO2 "      TV        "
+#define AUDIO3 "   PlayStation  "
+#define AUDIO4 "     Stereos    "
+#define AUDIO5 "      VHS       "
+#define AUDIO6 "     Input 6    "
 
-#define LED1_PORT PORTB
-#define LED2_PORT PORTB
-#define LED3_PORT PORTB
-#define LED4_PORT PORTA
-#define LED5_PORT PORTB
-#define LED6_PORT PORTB
-
-#define TRAN1 PD0
-#define TRAN2 PD1
-#define TRAN3 PD2
-#define TRAN4 PD3
-#define TRAN5 PD4
-#define TRAN6 PD5
-
+//4066B pin configuration
 #define TRAN1_PORT PORTD
 #define TRAN2_PORT PORTD
 #define TRAN3_PORT PORTD
@@ -43,54 +33,31 @@
 #define TRAN5_PORT PORTD
 #define TRAN6_PORT PORTD
 
-#define LED1_ON (LED1_PORT |= (1 << LED1))
-#define LED2_ON (LED2_PORT |= (1 << LED2))
-#define LED3_ON (LED3_PORT |= (1 << LED3))
-#define LED4_ON (LED4_PORT |= (1 << LED4))
-#define LED5_ON (LED5_PORT |= (1 << LED5))
-#define LED6_ON (LED6_PORT |= (1 << LED6))
+#define TRAN1_PIN PD5
+#define TRAN2_PIN PD4
+#define TRAN3_PIN PD3
+#define TRAN4_PIN PD2
+#define TRAN5_PIN PD1
+#define TRAN6_PIN PD0
 
-#define TRAN1_ON (TRAN1_PORT |= (1 << TRAN1))
-#define TRAN2_ON (TRAN2_PORT |= (1 << TRAN2))
-#define TRAN3_ON (TRAN3_PORT |= (1 << TRAN3))
-#define TRAN4_ON (TRAN4_PORT |= (1 << TRAN4))
-#define TRAN5_ON (TRAN5_PORT |= (1 << TRAN5))
-#define TRAN6_ON (TRAN6_PORT |= (1 << TRAN6))
+//4066B control
+#define TRAN1(X)   ((X) == 0    ? (TRAN1_PORT &= ~(1 << TRAN1_PIN))    : (TRAN1_PORT |= (1 << TRAN1_PIN)))
+#define TRAN2(X)   ((X) == 0    ? (TRAN2_PORT &= ~(1 << TRAN2_PIN))    : (TRAN2_PORT |= (1 << TRAN2_PIN)))
+#define TRAN3(X)   ((X) == 0    ? (TRAN3_PORT &= ~(1 << TRAN3_PIN))    : (TRAN3_PORT |= (1 << TRAN3_PIN)))
+#define TRAN4(X)   ((X) == 0    ? (TRAN4_PORT &= ~(1 << TRAN4_PIN))    : (TRAN4_PORT |= (1 << TRAN4_PIN)))
+#define TRAN5(X)   ((X) == 0    ? (TRAN5_PORT &= ~(1 << TRAN5_PIN))    : (TRAN5_PORT |= (1 << TRAN5_PIN)))
+#define TRAN6(X)   ((X) == 0    ? (TRAN6_PORT &= ~(1 << TRAN6_PIN))    : (TRAN6_PORT |= (1 << TRAN6_PIN)))
 
 uint8_t debounce(uint8_t sample);
 void init_interrupts();
 
-inline bool checkleds()
-{
-    if (
-        (LED1_PORT & (1 << LED1)) ||
-        (LED2_PORT & (1 << LED2)) ||
-        (LED3_PORT & (1 << LED3)) ||
-        (LED4_PORT & (1 << LED4)) ||
-        (LED5_PORT & (1 << LED5)) ||
-        (LED6_PORT & (1 << LED6))
-    ) { 
-        return true; 
-    }
-    else return false;
-}
-
-inline void leds_off()
-{
-    LED1_PORT &= ~(1 << LED1);
-    LED2_PORT &= ~(1 << LED2);
-    LED3_PORT &= ~(1 << LED3);
-    LED4_PORT &= ~(1 << LED4);
-    LED5_PORT &= ~(1 << LED5);
-    LED6_PORT &= ~(1 << LED6);
-}
-
 inline void transistors_off()
 {
-    TRAN1_PORT &= ~(1 << TRAN1);
-    TRAN2_PORT &= ~(1 << TRAN2);
-    TRAN3_PORT &= ~(1 << TRAN3);
-    TRAN4_PORT &= ~(1 << TRAN4);
-    TRAN5_PORT &= ~(1 << TRAN5);
-    TRAN6_PORT &= ~(1 << TRAN6);
+    TRAN1(0);
+    TRAN2(0);
+    TRAN3(0);
+    TRAN4(0);
+    TRAN5(0);
+    TRAN6(0);
 }
+#endif

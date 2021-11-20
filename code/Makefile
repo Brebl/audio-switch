@@ -16,9 +16,9 @@ SHELL = /bin/bash
 
 #hardware
 TARGET 			:= audio_switch
-TYPE			:= LED-version
+TYPE			:= Display-version
 VER				:= $(shell git tag | sed -n '$$p')
-MCU   			:= attiny2313a
+MCU   			:= attiny4313
 F_CPU 			:= 128000UL
 BAUD  			:= 9600UL
 PROGRAMMER_TYPE := avrispmkII
