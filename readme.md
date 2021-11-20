@@ -6,8 +6,8 @@ Also decent sound is a one goal.
 ## Layout
 
 4-port setup with HD44780 display, installed in 3.5" FDD mounting bracket.\
-![Test setup](/pics/display_setup.jpg)  
 ![LCD](/pics/welcome.jpg)
+![Test setup](/pics/display_setup.jpg)  
 
 ## Code / operation
 
@@ -36,7 +36,7 @@ BC547 Transistors had a nasty habit of making clicking sound when the emitter cu
 ### Board
 
 Here's my printed circuit board I ordered from a fabricator pcbway.com\
-<img src="/pics/front_back.jpg" alt="Front" width="400">
+<img src="/pics/front_back.jpg" alt="Front">
 
 First test setup with "a proper pcb". Works nice.\
 <img src="/pics/test_setup.jpg" alt="test-setup">
