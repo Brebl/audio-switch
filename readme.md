@@ -11,7 +11,7 @@ Also decent sound is a one goal.
 
 ## Code / operation
 
-Press of a button tells you via LCD which audio line is selected. Pressing the button again changes the input line. After 10 secs or so, display turn off to save power. Next version ditches the line-change button and automates this process based on port priority and incoming signals.\
+Press of a button tells you via LCD which audio line is selected. Pressing the button again changes the input line. After 10 secs or so, display turn off to save power. Display is accessed using 4-bit interface. Next version ditches the line-change button and automates this process based on port priority and incoming signals.\
 In addition to Master, there's 3 git branches. Each for a different version of this project.
 - led_version
 - display_version
