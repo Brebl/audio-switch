@@ -11,7 +11,7 @@ Also decent sound is a one feature.
 
 ## Code / operation
 
-Microcontroller unit (MCU) detects via analog-to-digital converter (ADC) what audio lines are receiving signal. MCU send this information through Serial peripheral interface (SPI) to the primary MCU and based on input port priority primary MCU switches on correct input port. Pushbutton can be used to force certain port open or to switch back to automatic operation.
+Microcontroller unit (MCU) detects via analog-to-digital converter (ADC) what audio lines are receiving signal. MCU send this information through Serial peripheral interface (SPI) to the primary MCU and based on input port priority primary MCU switches on correct input port. Port information is shown in LCD. After 10 secs or so, display turn off to save power. Display is accessed using 4-bit interface. Pushbutton can be used to force certain port open or to switch back to automatic operation.
   
 In addition to Master, there's 3 git branches. Each for a different version of this project.
 - led_version
