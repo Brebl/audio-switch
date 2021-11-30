@@ -1,7 +1,7 @@
 # Audio switch   
 
-This is an avr project for selecting one audio signal from multiple input lines (6-port maximum). The project is designed to minimize power consumption by making use of sleep modes, interrupts and internal timers.\
-Also decent sound is a one goal.
+This is an avr project for selecting one audio signal from multiple input lines (6-port maximum). The project is designed to minimize power consumption by making use of sleep modes, interrupts and internal timers. Other features include multifunction pushbutton, LCD, SPI-communication, automatic detection of audio signals via ADC.\
+Also decent sound is a one feature.
 
 ## Layout
 
@@ -11,7 +11,8 @@ Also decent sound is a one goal.
 
 ## Code / operation
 
-Press of a button tells you via LCD which audio line is selected. Pressing the button again changes the input line. After 10 secs or so, display turn off to save power. Display is accessed using 4-bit interface. Next version ditches the line-change button and automates this process based on port priority and incoming signals.\
+Microcontroller unit (MCU) detects via analog-to-digital converter (ADC) what audio lines are receiving signal. MCU send this information through Serial peripheral interface (SPI) to the primary MCU and based on input port priority primary MCU switches on correct input port. Pushbutton can be used to force certain port open or to switch back to automatic operation.
+  
 In addition to Master, there's 3 git branches. Each for a different version of this project.
 - led_version
 - display_version
@@ -30,8 +31,8 @@ make flash
 
 ## Hardware  
 
-I'm using Atmel's Attiny4313 MCU, with internal 128 kHz oscillator. ISP programmer needs to be slowed down because of this low power oscillator. (avrdude -B option)
-BC547 Transistors had a nasty habit of making clicking sound when the emitter current went on/off, so I switched to CD4066B CMOS Quad Bilateral Switch, which works nice. This pcb feature a 10-pin male ISP connector for programming/debugging. Powering this device could be made through USB. Board is designed using KiCad software.
+Primary MCU is Atmel's Attiny4313 MCU, with internal 128 kHz oscillator. ISP programmer needs to be slowed down because of this low power oscillator. (avrdude -B option) Secondary MCU is Attiny24A. Switching is done by 4066B CMOS Quad Bilateral Switch.
+This pcb feature a 10-pin male ISP connector for programming/debugging. Powering this device could be made through USB or with 5V regulator you can use for example 9-volt battery. Board is designed using KiCad software.
 
 ### Board
 
@@ -46,3 +47,20 @@ First test setup with "a proper pcb". Works nice.\
 Voltage: 5V\
 Current: 0,11mA\
 Audio connection: max 6x stereo in, 1x stereo out
+
+### Roadmap
+
+- [x] Consept testing with Attiny2313A/4313
+- [x] Sleep modes, interrupts
+- [x] Simple pushbutton logic
+- [x] LED interface
+- [x] Schematics
+- [x] Design PCB & place order
+- [x] Board test setup, sound input/output
+- [x] Fabricate enclosure
+- [x] Power source
+- [x] LCD interface
+- [X] ATtiny24A with ADC
+- [ ] SPI communication 
+- [ ] Automatic audio signal detection
+- [ ] Multifunction pushbutton
