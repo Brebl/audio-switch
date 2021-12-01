@@ -1,7 +1,7 @@
 # Audio switch   
 
 This is an avr project for selecting one audio signal from multiple input lines (6-port maximum). The project is designed to minimize power consumption by making use of sleep modes, interrupts and internal timers. Other features include multifunction pushbutton, LCD, SPI-communication, automatic detection of audio signals via ADC.\
-Also this gadget generates amazing sound with minimal distortion.
+Objective for this project is to generates amazing sound with minimal distortion.
 
 ## Layout
 
