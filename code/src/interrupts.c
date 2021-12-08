@@ -4,6 +4,7 @@ volatile static uint8_t timeout_counter = 0;
 const uint8_t timeout_max = 10;           //secs
 volatile static uint8_t audioport_counter = 0;
 const uint8_t audioport_max = 5;
+volatile static enum Mode mode = automatic;
 
 void init_interrupts()
 {
@@ -35,52 +36,47 @@ void init_interrupts()
 }
 
 //push button logic
+/*
+Short press: Change port or turn backlight on
+Long press: Switch between automatic and manual mode
+Very long press: Reset
+*/
 ISR(PCINT2_vect) {
+#define LONG_PRESS 3
+#define VERY_LONG_PRESS 10
+    uint8_t counter_low = 0;
+    uint8_t counter_high = 0;
+    uint8_t buttons = debounce(PUSH_BUTTON_PORT);
     set_sleep_mode(SLEEP_MODE_IDLE);
-    uint8_t buttonpin = debounce(PUSH_BUTTON_PORT);
-    if (bit_is_clear(buttonpin, PUSH_BUTTON)) { //button press
-        if (bit_is_set(LCD_AK_PORT, LCD_AK_PIN)) { //lcd backlight is on
+    if (bit_is_clear(buttons, PUSH_BUTTON)) { //button press
+        if (bit_is_set(LCD_AK_PORT, LCD_AK_PIN) && mode==manual) { //lcd backlight is on
+            timeout_counter = 0;
             audioport_counter++;
             if (audioport_counter >= audioport_max) {
                 audioport_counter = 0;
             }
-            timeout_counter = 0;
-            transistors_off();
-            switch (audioport_counter) {
-            case 0:
-                TRAN1(1);
-                LCD_animate(AUDIO1);
-                break;
-            case 1:
-                TRAN2(1);
-                LCD_animate(AUDIO2);
-                break;
-            case 2:
-                TRAN3(1);
-                LCD_animate(AUDIO3);
-                break;
-            case 3:
-                TRAN4(1);
-                LCD_animate(AUDIO4);
-                break;
-            case 4:
-                TRAN5(1);
-                LCD_animate(AUDIO5);
-                break;
-            case 5:
-                TRAN6(1);
-                LCD_animate(AUDIO6);
-                break;
-            default:
-                break;
-            }
+            change_port(audioport_counter);
         }
         else { //turn lcd backlight on
             LCD_AK(1);
+            timeout_counter = 0;
         }
-        while (bit_is_clear(buttonpin, PUSH_BUTTON)) {
-            buttonpin = debounce(PUSH_BUTTON_PORT);
+        while (bit_is_clear(buttons, PUSH_BUTTON)) { //button is being pressed
+            buttons = debounce(PUSH_BUTTON_PORT);
             _delay_ms(5);
+            counter_low++;
+            if (counter_low > 200) {
+                counter_low = 0;
+                counter_high++;
+                if (counter_high == LONG_PRESS) {
+                    change_mode(&mode);
+                }
+                else if (counter_high == VERY_LONG_PRESS) {
+                    LCD_clear_screen();
+                    LCD_string("    reset...    ");
+                    wdt_enable(WDTO_1S);
+                }
+            }
         }
     }
 }
@@ -96,13 +92,23 @@ ISR(TIMER0_COMPA_vect)
     }
 }
 
-ISR(USI_START_vect) //SPI
+//SPI
+ISR(USI_START_vect)
 {
-    //USIDR = 0xff; //if you wish to send byte to master
-    USISR = (1 << USIOIF); //clear overflow flag and counter
-    while (!(USISR & (1 << USIOIF))) {;}
+    if (mode == automatic) {
+        LCD_AK(1);
+        set_sleep_mode(SLEEP_MODE_IDLE);
+        USISR = (1 << USIOIF); //clear overflow flag and counter
+        while (!(USISR & (1 << USIOIF))) { ; }
+        change_port(USIDR);
+        USISR = (1 << USISIF); //clear interrupt flag
+    }
+}
+
+void change_port(uint8_t new_port)
+{
     transistors_off();
-    switch (USIDR) {
+    switch (new_port) {
     case 0:
         TRAN1(1);
         LCD_animate(AUDIO1);
@@ -130,5 +136,20 @@ ISR(USI_START_vect) //SPI
     default:
         break;
     }
-    USISR = (1 << USISIF); //clear interrupt flag
+}
+
+void change_mode(volatile enum Mode* mode)
+{
+    switch (*mode) {
+    case automatic:
+        LCD_animate("  Manual mode   ");
+        *mode = manual;
+        break;
+    case manual:
+        LCD_animate(" Automatic mode ");
+        *mode = automatic;
+        break;
+    default:
+        break;
+    }
 }
