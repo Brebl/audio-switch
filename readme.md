@@ -64,3 +64,4 @@ Audio connection: max 6x stereo in, 1x stereo out
 - [x] SPI communication 
 - [x] Automatic audio signal detection
 - [x] Multifunction pushbutton
+- [ ] Measure distortion
