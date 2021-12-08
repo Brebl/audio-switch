@@ -56,7 +56,7 @@ enum Mode {
 uint8_t debounce(uint8_t sample);
 void init_interrupts();
 void change_port(uint8_t new_port);
-void change_mode(enum Mode*);
+void change_mode(volatile enum Mode*);
 
 inline void transistors_off()
 {
