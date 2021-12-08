@@ -48,8 +48,15 @@
 #define TRAN5(X)   ((X) == 0    ? (TRAN5_PORT &= ~(1 << TRAN5_PIN))    : (TRAN5_PORT |= (1 << TRAN5_PIN)))
 #define TRAN6(X)   ((X) == 0    ? (TRAN6_PORT &= ~(1 << TRAN6_PIN))    : (TRAN6_PORT |= (1 << TRAN6_PIN)))
 
+enum Mode {
+    automatic,
+    manual
+};
+
 uint8_t debounce(uint8_t sample);
 void init_interrupts();
+void change_port(uint8_t new_port);
+void change_mode(enum Mode*);
 
 inline void transistors_off()
 {
