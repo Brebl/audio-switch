@@ -61,6 +61,6 @@ Audio connection: max 6x stereo in, 1x stereo out
 - [x] Power source
 - [x] LCD interface
 - [X] ATtiny24A with ADC
-- [ ] SPI communication 
-- [ ] Automatic audio signal detection
-- [ ] Multifunction pushbutton
+- [x] SPI communication 
+- [x] Automatic audio signal detection
+- [x] Multifunction pushbutton
