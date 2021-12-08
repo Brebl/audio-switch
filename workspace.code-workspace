@@ -6,7 +6,9 @@
 	],
 	"settings": {
 		"files.associations": {
-			"vector": "cpp"
+			"vector": "cpp",
+			"bool.h": "c",
+			"stdbool.h": "c"
 		}
 	}
 }
